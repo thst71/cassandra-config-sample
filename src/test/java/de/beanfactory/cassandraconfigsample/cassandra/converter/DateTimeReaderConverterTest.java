@@ -1,15 +1,13 @@
 package de.beanfactory.cassandraconfigsample.cassandra.converter;
 
-import jnr.constants.platform.Local;
 import org.junit.jupiter.api.Test;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
-import java.util.Locale;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class DateTimeReaderConverterTest {
 

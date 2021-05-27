@@ -2,6 +2,7 @@ package de.beanfactory.cassandraconfigsample.feature;
 
 import de.beanfactory.cassandraconfigsample.cassandra.model.Person;
 import de.beanfactory.cassandraconfigsample.cassandra.repo.PersonRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -13,6 +14,7 @@ public class FeatureService {
 
     private PersonRepository personRepository;
 
+    @Autowired
     public FeatureService(PersonRepository personRepository) {
 
         this.personRepository = personRepository;
