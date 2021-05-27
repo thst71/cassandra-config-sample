@@ -4,23 +4,14 @@ import de.beanfactory.cassandraconfigsample.cassandra.converter.DateTimeReaderCo
 import de.beanfactory.cassandraconfigsample.cassandra.converter.DateTimeWriterConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.data.cassandra.config.AbstractCassandraConfiguration;
-import org.springframework.data.cassandra.config.SchemaAction;
 import org.springframework.data.cassandra.core.convert.CassandraCustomConversions;
-import org.springframework.data.cassandra.core.cql.keyspace.CreateKeyspaceSpecification;
-import org.springframework.data.cassandra.core.cql.keyspace.DataCenterReplication;
-import org.springframework.data.cassandra.core.cql.keyspace.DropKeyspaceSpecification;
-import org.springframework.data.cassandra.core.cql.keyspace.KeyspaceOption;
 import org.springframework.data.cassandra.repository.config.EnableCassandraRepositories;
-import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
-import java.util.List;
 
 @Configuration
 @EnableCassandraRepositories(basePackages = "de.beanfactory.cassandraconfigsample")
-public class CassandraConfiguration extends AbstractCassandraConfiguration {
+public class CassandraConfiguration {
     @Bean
     CassandraCustomConversions customConversions(DateTimeWriterConverter dateTimeWriterConverter,
             DateTimeReaderConverter dateTimeReaderConverter) {
@@ -35,49 +26,5 @@ public class CassandraConfiguration extends AbstractCassandraConfiguration {
     @Bean
     DateTimeWriterConverter dateTimeWriterConverter() {
         return new DateTimeWriterConverter();
-    }
-
-    @Override
-    protected String getLocalDataCenter() {
-        return super.getLocalDataCenter();
-    }
-
-    @Override
-    protected String getContactPoints() {
-        return super.getContactPoints();
-    }
-
-    @Override
-    protected int getPort() {
-        return super.getPort();
-    }
-
-    @Override
-    protected String getKeyspaceName() {
-        return "testcase";
-    }
-
-    @Override
-    public List<CreateKeyspaceSpecification> getKeyspaceCreations() {
-        CreateKeyspaceSpecification specification = CreateKeyspaceSpecification.createKeyspace("testcase")
-                .with(KeyspaceOption.DURABLE_WRITES, true)
-                .withNetworkReplication(DataCenterReplication.of("datacenter1", 1));
-
-        return Arrays.asList(specification);
-    }
-
-    @Override
-    protected List<DropKeyspaceSpecification> getKeyspaceDrops() {
-        return Arrays.asList(DropKeyspaceSpecification.dropKeyspace("testcase"));
-    }
-
-    @Override
-    public String[] getEntityBasePackages() {
-        return new String[] { "de.beanfactory.cassandraconfigsample" };
-    }
-
-    @Override
-    public SchemaAction getSchemaAction() {
-        return SchemaAction.RECREATE;
     }
 }
